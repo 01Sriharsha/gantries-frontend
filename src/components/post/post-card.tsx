@@ -1,20 +1,15 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { Post } from "@/types";
 import { cn } from "@/lib/utils";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image1 from "@/assets/images/bg3.png";
 import Link from "next/link";
-import { Button } from "../ui/button";
 import { Heart } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "@/lib/axios";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { toast } from "sonner";
 
 type PostCardProps = {
@@ -29,7 +24,7 @@ export default function PostCard({ post, className }: PostCardProps) {
       ? post.content
       : post.content.substring(0, maxContentLength);
 
-  const [isLiked, setIsLiked] = useState(!!post.isLiked);
+  const [isLiked, setIsLiked] = useState(post.isLiked);
 
   const { mutate: likePost, isPending } = useMutation({
     mutationFn: async () => {
@@ -39,11 +34,10 @@ export default function PostCard({ post, className }: PostCardProps) {
       });
 
       if (error) setIsLiked(false);
-      else if (data && data.data){
-        toast.info(data.message)
+      else if (data && data.data) {
+        toast.info(data.message);
         setIsLiked(data.data.isLiked);
         console.log(data);
-        
       }
     },
   });

@@ -34,14 +34,17 @@ export default async function CommunitiesPage() {
                 className="h-28 w-28 rounded-full object-cover border border-secondary"
               />
               <h4 className="text-lg font-semibold text-primary capitalize">
-                <Link href={`/network/community/${community.name}`} className="hover:underline">
+                <Link
+                  href={`/network/community/${community.name}`}
+                  className="hover:underline"
+                >
                   {community.name}
                 </Link>
               </h4>
-              <p className="flex items-center gap-2 font-medium">
+              {/* <p className="flex items-center gap-2 font-medium">
                 <User size={"1.1rem"} />
                 1.1K
-              </p>
+              </p> */}
               <Button>Follow</Button>
             </div>
           ))}

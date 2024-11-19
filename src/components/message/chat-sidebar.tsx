@@ -11,7 +11,6 @@ import CreateConversation from "./create-conversation";
 import moment from "moment";
 import { useMessageStote } from "@/state/message-state";
 
-type ChatSidebarProps = {};
 
 type Conversation = {
   participants: {

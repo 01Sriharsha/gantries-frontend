@@ -27,7 +27,7 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
 
   const { data: postsData } = await axios<PaginationResponse<Post>>({
     method: "get",
-    endpoint: "/post",
+    endpoint: `/post/community/${community._id}`,
   });
 
   const communityPosts = postsData?.data?.data || [];

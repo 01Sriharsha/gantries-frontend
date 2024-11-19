@@ -28,7 +28,7 @@ export type User = {
 
 export type Student = {
   user_id: string;
-  dateOfBirth: String;
+  dateOfBirth: string;
   gender: string;
   college: string;
   yearOfEnding: string;
@@ -38,7 +38,7 @@ export type Student = {
   aim: string;
   plan: string;
   profilePicture: string;
-  socialLinks: String[];
+  socialLinks: string[];
 };
 
 export type Post = {

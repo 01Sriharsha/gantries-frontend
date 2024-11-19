@@ -81,7 +81,7 @@ export default function ChatPage({
           : prev
       );
     });
-  }, [socket]);
+  }, [recieverId, socket, user?._id]);
 
   // Create a ref for the chat container or the last message
   const messagesEndRef = useRef<HTMLDivElement>(null);

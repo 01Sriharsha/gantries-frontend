@@ -24,7 +24,7 @@ export default function Navbar() {
             <h1 className="text-3xl text-primary font-bold">{APP_TITLE}</h1>
           </Link>
         </div>
-        <Search />
+        {/* <Search /> */}
         <div className="flex items-center space-x-4">
           {user ? (
             <div className="flex items-center gap-2">

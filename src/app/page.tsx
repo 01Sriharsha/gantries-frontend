@@ -1,5 +1,5 @@
-export default function Home() {
-  return (
-    <main>Home page</main>
-  );
+import { redirect } from "next/navigation";
+
+export default async function Home() {
+  return redirect("/network");
 }
