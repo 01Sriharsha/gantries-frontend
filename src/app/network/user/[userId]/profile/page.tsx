@@ -1,10 +1,8 @@
-import { Button } from "@/components/ui/button";
-import axios from "@/lib/axios";
+import fetchServer from "@/lib/fetch-server";
 import { cn } from "@/lib/utils";
 import { Student, User } from "@/types";
 import moment from "moment";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
 type ProfilePageProps = {
@@ -16,7 +14,7 @@ type ProfilePageProps = {
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const userId = params.userId;
 
-  const { data } = await axios<User & { student: Student }>({
+  const { data } = await fetchServer<User & { student: Student }>({
     method: "get",
     endpoint: `/user/${userId}`,
   });
@@ -76,10 +74,10 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           </h3>
           <div className="space-y-1.5">
             <p className="text-gray-700 text-lg font-medium">
-              {user.student.college}
+              {user.student?.college}
             </p>
             <p className="text-gray-700">
-              {user.student.course}-{user.student.yearOfEnding}
+              {user.student?.course}-{user.student?.yearOfEnding}
             </p>
           </div>
         </div>
@@ -89,9 +87,9 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             Interests
           </h3>
           <ul className="flex space-x-4">
-            {user.student.interests.length > 0 ? (
+            {user.student?.interests?.length > 0 ? (
               <>
-                {user.student.interests.map((e, i) => (
+                {user.student?.interests?.map((e, i) => (
                   <button
                     key={i}
                     className={cn(

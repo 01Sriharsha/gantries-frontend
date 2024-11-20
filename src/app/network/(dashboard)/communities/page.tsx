@@ -1,15 +1,15 @@
+import CommunitySubscribeButton from "@/components/community/community-subscribe-button";
 import SuggestedFriends from "@/components/side-section/suggested-friends";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import axios from "@/lib/axios";
+import fetchServer from "@/lib/fetch-server";
 import { Community } from "@/types";
-import { User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 export default async function CommunitiesPage() {
-  const { data } = await axios<Community[]>({
+  const { data } = await fetchServer<Community[]>({
     method: "get",
     endpoint: "/community",
   });
@@ -41,11 +41,7 @@ export default async function CommunitiesPage() {
                   {community.name}
                 </Link>
               </h4>
-              {/* <p className="flex items-center gap-2 font-medium">
-                <User size={"1.1rem"} />
-                1.1K
-              </p> */}
-              <Button>Follow</Button>
+              <CommunitySubscribeButton community={community} />
             </div>
           ))}
         </div>

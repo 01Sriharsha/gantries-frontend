@@ -5,12 +5,15 @@ import { useMutation } from "@tanstack/react-query";
 import { Button } from "../ui/button";
 import { User } from "@/types";
 import { useState } from "react";
+import { useAuthStore } from "@/state/auth-state";
+import { toast } from "sonner";
 
 type ConnectButtonProps = {
-  user: User;
+  user: Partial<User>;
 };
 
 export default function ConnectButton({ user }: ConnectButtonProps) {
+  const { isAuthenticated } = useAuthStore();
   const [connected, setConnected] = useState(false);
   const { isPending, mutate } = useMutation({
     mutationFn: async () => {
@@ -34,9 +37,11 @@ export default function ConnectButton({ user }: ConnectButtonProps) {
       className="rounded-full"
       isLoading={isPending}
       disabled={isPending}
-      onClick={() => mutate()}
+      onClick={() =>
+        isAuthenticated ? mutate() : toast.info("Login to connect")
+      }
     >
-      {connected ? "Connected" : "Connect"}
+      {connected ? "Pending" : "Connect"}
     </Button>
   );
 }

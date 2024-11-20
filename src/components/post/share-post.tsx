@@ -24,7 +24,7 @@ const SharePost = ({ post }: SharePostProps) => {
 
   const postLink = useMemo(() => {
     if (typeof window !== "undefined") {
-      return `${window.location.origin}/network/post${post.title}`;
+      return `${window.location.origin}/network/post/${post._id}`;
     }
   }, [post]);
 
@@ -47,14 +47,12 @@ const SharePost = ({ post }: SharePostProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant={"ghost"}
-          size={"sm"}
-          className="flex items-center gap-1 text-primary border border-gray-200"
+        <button
+          className="text-sm flex items-center gap-1.5 text-primary"
           ref={ref}
         >
           <Share2 size={"1.1rem"} /> Share
-        </Button>
+        </button>
       </PopoverTrigger>
       <PopoverContent className="flex items-center gap-2 p-2 rounded-xl w-full bg-gray-100">
         <CopyIcon

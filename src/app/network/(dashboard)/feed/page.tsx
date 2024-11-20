@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import axios from "@/lib/axios";
 import { PaginationResponse, Post } from "@/types";
 import { APP_TITLE } from "@/utils/constants";
 import PostGallery from "@/components/post/post-gallery";
+import fetchServer from "@/lib/fetch-server";
 
 export const metadata: Metadata = {
   title: "Feed",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function FeedPage() {
-  const { data } = await axios<PaginationResponse<Post>>({
+  const { data } = await fetchServer<PaginationResponse<Post>>({
     method: "get",
     endpoint: "/post",
   });

@@ -1,12 +1,12 @@
 import Axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { toast } from "sonner";
 
-type ResponseBody<T = any> = {
+export type ResponseBody<T = any> = {
   message?: string;
   data?: T;
 };
 
-const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
+export const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 if (!SERVER_URL) {
   console.error("Server URL is not defined in env!!");
   process.exit(0);
@@ -21,7 +21,7 @@ export const axiosInstance = Axios.create({
   withCredentials: true,
 });
 
-type AxiosOptions = {
+export type AxiosOptions = {
   method: "get" | "post" | "put" | "delete";
   endpoint: string;
   body?: any;

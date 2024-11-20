@@ -9,8 +9,10 @@ import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "@/lib/axios";
-import {  useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
+import SharePost from "./share-post";
+import { useAuthStore } from "@/state/auth-state";
 
 type PostCardProps = {
   post: Post;
@@ -23,6 +25,8 @@ export default function PostCard({ post, className }: PostCardProps) {
     maxContentLength === "full"
       ? post.content
       : post.content.substring(0, maxContentLength);
+
+  const { isAuthenticated } = useAuthStore();
 
   const [isLiked, setIsLiked] = useState(post.isLiked);
 
@@ -80,16 +84,21 @@ export default function PostCard({ post, className }: PostCardProps) {
           ))}
         </div>
       </CardContent>
-      <CardFooter className="p-2">
+      <CardFooter className="p-2 flex items-center gap-4">
         <button
           disabled={isPending}
           onClick={() => {
-            setIsLiked(!isLiked);
-            likePost();
+            if (isAuthenticated) {
+              setIsLiked(!isLiked);
+              likePost();
+            } else {
+              toast.info("Login to continue!");
+            }
           }}
         >
           <Heart size={"1.1rem"} color="red" fill={isLiked ? "red" : "white"} />
         </button>
+        <SharePost post={post} />
       </CardFooter>
     </Card>
   );

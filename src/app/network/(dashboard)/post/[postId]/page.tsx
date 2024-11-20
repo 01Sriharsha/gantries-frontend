@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { Comment, Post } from "@/types";
-import axios from "@/lib/axios";
 import PostCard from "@/components/post/post-card";
 import CommentSection from "./comment-section";
+import fetchServer from "@/lib/fetch-server";
 
 type PostPageProps = {
   params: { postId: string };
@@ -14,7 +14,7 @@ export const generateMetadata = async ({
   params,
 }: PostPageProps): Promise<Metadata> => {
   const postId = params.postId;
-  const { data, error } = await axios<Post>({
+  const { data, error } = await fetchServer<Post>({
     method: "get",
     endpoint: `/post/${postId}`,
   });
@@ -30,7 +30,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   if (!postId) redirect("/network/feed");
 
-  const { data, error } = await axios<Post>({
+  const { data, error } = await fetchServer<Post>({
     method: "get",
     endpoint: `/post/${postId}`,
   });
@@ -41,7 +41,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   const post = data.data;
 
-  const postCommentsResponse = await axios<Comment[]>({
+  const postCommentsResponse = await fetchServer<Comment[]>({
     method: "get",
     endpoint: `/comment/${postId}`,
   });

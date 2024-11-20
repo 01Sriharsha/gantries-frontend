@@ -24,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import TagSelector from "@/utils/tag-selector";
 import { useMutation } from "@tanstack/react-query";
 import axios from "@/lib/axios";
+import { useAuthStore } from "@/state/auth-state";
 
 const CreatePostSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -75,6 +76,7 @@ export default function CreatePostForm({
   });
 
   const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -115,7 +117,9 @@ export default function CreatePostForm({
   });
 
   const onSubmit = async (values: CreatePostSchema) => {
-    console.log(values);
+    if (!isAuthenticated) {
+      return toast.info("Login to create the post");
+    }
 
     if (values.images) {
       // Append images
@@ -270,9 +274,7 @@ export default function CreatePostForm({
             />
             <p className="my-2 text-center">{uploading && "Uploading..."}</p>
             <Button
-              isLoading={
-                createPostMutation.isPending || uploading
-              }
+              isLoading={createPostMutation.isPending || uploading}
               disabled={createPostMutation.isPending || uploading}
               type="submit"
             >
